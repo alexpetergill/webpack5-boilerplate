@@ -8,10 +8,11 @@ module.exports = {
   entry: [paths.src + '/index.js'],
   output: {
     path: paths.build,
-    filename: '[name].js',
+    filename: '[name].bundle.js',
     publicPath: '/',
-    assetModuleFilename: 'src/images/[name].[ext]'
+    assetModuleFilename: 'images/[name].[ext]',
   },
+  target: ['web', 'es5'],
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
@@ -19,6 +20,7 @@ module.exports = {
         {
           from: paths.src + '/images',
           to: 'images',
+          noErrorOnMissing: true,
         },
       ],
     }),
@@ -32,7 +34,7 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, use: ['babel-loader'] },
-      { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/resource' },
+      { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: 'asset/inline' },
       { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: 'asset/inline' },
     ],
   },
